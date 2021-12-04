@@ -29,4 +29,54 @@ for (let bitPosition = 0; bitPosition < inputArray[0].length; bitPosition++) {
 
 gammaRateDecimal = parseInt(gammaRate.join(""), 2);
 epsilonRateDecimal = parseInt(epsilonRate.join(""), 2);
-console.log(gammaRateDecimal * epsilonRateDecimal);
+console.log('power consumption: ', gammaRateDecimal * epsilonRateDecimal);
+
+/* ---Part 2--- */
+
+let filteredArrayO2 = inputArray;
+let zerosCount = 0;
+let onesCount = 0;
+let moreFrequented;
+let lessFrequented;
+
+/*More frequented char ('oxygen generator rating') */
+for (let iteration = 0; filteredArrayO2.length != 1; iteration++) {  
+for (let i = 0; i < filteredArrayO2.length; i++) {
+  if (filteredArrayO2[i].charAt(iteration) === "0") {
+    zerosCount++;
+  } else onesCount++;
+}
+  if (zerosCount > onesCount) {
+    moreFrequented = '0';    
+  }
+  if (zerosCount <= onesCount) {
+    moreFrequented = '1';    
+  }  
+  zerosCount = 0;
+  onesCount = 0;
+  
+  filteredArrayO2 = filteredArrayO2.filter(item => item.charAt(iteration) === moreFrequented);
+}
+
+
+/* Less frequented char ('CO2 scrubber rating')*/
+let filteredArrayCO2 = inputArray;
+for (let iteration = 0; filteredArrayCO2.length != 1; iteration++) {  
+  for (let i = 0; i < filteredArrayCO2.length; i++) {
+    if (filteredArrayCO2[i].charAt(iteration) === "0") {
+      zerosCount++;
+    } else onesCount++;
+  }
+    if (zerosCount > onesCount) {
+      lessFrequented = '1';    
+    }
+    if (zerosCount <= onesCount) {
+      lessFrequented = '0';    
+    }  
+    zerosCount = 0;
+    onesCount = 0;
+    
+    filteredArrayCO2 = filteredArrayCO2.filter(item => item.charAt(iteration) === lessFrequented);
+  }
+  
+  console.log('life support rating: ', parseInt(filteredArrayO2, 2)*parseInt(filteredArrayCO2, 2));
